@@ -1,0 +1,2 @@
+# this will exclude the node_modules to be copied to image which will make the image build faster
+node_modules

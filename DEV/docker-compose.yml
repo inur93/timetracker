@@ -1,0 +1,50 @@
+version: "3.7"
+
+services:
+ frontend:
+  image: timetracker-web
+  build:
+   context: ../frontend
+  ports:
+   - 3000:3000
+   - 35729:35729 #this port is needed for hot reload
+  volumes:
+   - ../frontend:/app:rw
+   - node_modules:/node_modules
+ 
+ api:
+  image: timetracker-api
+  build:
+   context: ../api
+   dockerfile: Dockerfile
+  volumes:
+   - ../api:/tmp:rw
+   
+ server:
+  image: tomcat:9.0-jdk11
+  ports:
+   - 8080:8080 #api is accessed via port 8080
+  links:
+   - db #the name of the link is also the host name that the database can be reached at
+  volumes: 
+   - ../api/target/com.vormadal.timetracker-1.0.0.war:/usr/local/tomcat/webapps/ROOT.war:rw
+ db:
+  image: mongo:3.4
+  #command: ./init.sh #--serviceExecutor adaptive # alternate option is synchronous . adaptive is new (and experimental) but should give better performance
+  ports:
+   - 27017:27017
+  #volumes:
+   #- ./db/logs:/data/logs:rw
+   #- /mnt/f/db/data:/data/db:rw
+volumes:
+ node_modules:
+# db:
+# ./api/target/com.vormadal.timetracker-1.0.0.war:
+ # volumes at bottom are magic volumes giving proper access to volumes defined in each service
+#docker-compose up --build
+
+#
+#docker run -it -v ${pwd}:/tmp timetracker-api
+#docker run -it -v ${pwd}/db:/data/db mongo:3.6
+
+# docker run -it timetracker-mongo sh # run shell in container
