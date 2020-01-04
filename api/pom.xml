@@ -12,6 +12,7 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <jersey.version>2.25</jersey.version>
         <tomcat.version>8.5.23</tomcat.version>
+        <webProject>frontend</webProject>
     </properties>
 
     <build>
@@ -24,9 +25,123 @@
                     <target>8</target>
                 </configuration>
             </plugin>
+
+            <!--<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+                <version>2.0.0</version>
+                <configuration>
+                    <assembleDirectory>target</assembleDirectory>
+                    <programs>
+                        <program>
+                            <mainClass>launch.Main</mainClass>
+                            <name>webapp</name>
+                        </program>
+                    </programs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>assemble</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.github.jsimone</groupId>
+                                    <artifactId>webapp-runner</artifactId>
+                                    <version>8.5.11.3</version>
+                                    <destFileName>webapp-runner.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-
+    <profiles>
+        <profile>
+            <id>Build react app</id>
+            <build>
+                <plugins>
+                    <!-- maven-antrun-plugin - builds and copies the React app-->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <workingDirectory>../${webProject}</workingDirectory>
+                                    <executable>npm</executable>
+                                    <arguments>
+                                        <argument>run</argument>
+                                        <argument>build</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>Copy react app</id>
+            <build>
+                <plugins>
+                    <!-- copies react app -->
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>2.6</version>
+                        <executions>
+                            <execution>
+                                <id>copy-resources</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <!-- copies the react app to build folder -->
+                                <configuration>
+                                    <outputDirectory>target/${project.build.finalName}</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>../${webProject}/build</directory>
+                                            <filtering>true</filtering>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <nonFilteredFileExtensions>
+                                <nonFilteredFileExtension>woff</nonFilteredFileExtension>
+                                <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
+                                <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+                            </nonFilteredFileExtensions>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
     <dependencies>
 
         <dependency>
@@ -49,11 +164,11 @@
             <artifactId>jersey-media-json-jackson</artifactId>
             <version>${jersey.version}</version>
         </dependency>
-       <!-- <dependency>
-            <groupId>org.glassfish.jersey.test-framework.providers</groupId>
-            <artifactId>jersey-test-framework-provider-jdk-http</artifactId>
-            <version>${jersey.version}</version>
-        </dependency>-->
+        <!-- <dependency>
+             <groupId>org.glassfish.jersey.test-framework.providers</groupId>
+             <artifactId>jersey-test-framework-provider-jdk-http</artifactId>
+             <version>${jersey.version}</version>
+         </dependency>-->
         <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-multipart
         only needed if it is required to upload files images or similar.
         -->
@@ -162,7 +277,7 @@
             </snapshots>
             <url>https://bitbucket.org/vormadal/configuration-service/raw/releases</url>
         </repository>
-		<repository>
+        <repository>
             <id>com.vormadal.permissionmanagement</id>
             <name>com.vormadal.permissionmanagement</name>
             <releases>
@@ -173,7 +288,7 @@
             </snapshots>
             <url>https://bitbucket.org/vormadal/permission-management/raw/releases</url>
         </repository>
-		<repository>
+        <repository>
             <id>com.vormadal.mongodb</id>
             <name>com.vormadal.mongodb</name>
             <releases>

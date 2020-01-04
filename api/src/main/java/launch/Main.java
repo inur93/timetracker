@@ -35,8 +35,10 @@ public class Main {
         // Servlet 3.0 annotation will work
         File additionWebInfClasses = new File("target/classes");
         WebResourceRoot resources = new StandardRoot(ctx);
-        resources.addPreResources(new DirResourceSet(resources, "/WEB-INF/classes",
-                additionWebInfClasses.getAbsolutePath(), "/"));
+        resources.addPreResources(new DirResourceSet(resources,
+                "/WEB-INF/classes",
+                additionWebInfClasses.getAbsolutePath(),
+                "/"));
         ctx.setResources(resources);
 
         tomcat.start();
