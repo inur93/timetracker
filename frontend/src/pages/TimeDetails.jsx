@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { stores } from "../common/config";
 import { observer, inject } from "mobx-react";
 import Page from './Page';
-import { FormGroup, Input, Label, Button, Table, Col, Row } from 'reactstrap';
+import { FormGroup, Input, Label, Button, Col, Row } from 'reactstrap';
 import CustomForm, { HasChanged } from '../components/shared/CustomForm';
 import { D, toast } from '../App';
 import { format } from 'date-fns';
@@ -24,7 +24,7 @@ const loadData = flow(function* (date, timeRegistrationStore, setTimeRegistratio
 export default inject(stores.timeRegistrationStore, stores.localizationStore)(observer(function (props) {
     const { localizationStore, timeRegistrationStore } = props;
     const { currentLocale } = localizationStore;
-    const { loading } = timeRegistrationStore;
+    //const { loading } = timeRegistrationStore;
 
     const [timeRegistrations, setTimeRegistrations] = useState([]);
     const [toDelete, setToDelete] = useState([]);

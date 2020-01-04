@@ -14,7 +14,7 @@ export default inject([stores.localizationStore])(observer(function (props) {
             props.localizationStore.currentLanguageKey = lang;
         }
     }
-    if(!languages || languages.length == 0) return null;
+    if(!languages || languages.length === 0) return null;
 
     return <UncontrolledDropdown {...otherProps} nav={nav} inNavbar={nav}>
         <DropdownToggle color={nav ? undefined : 'link'} nav={nav} caret>

@@ -7,7 +7,6 @@ import { decorate, computed, reaction, action, observable } from 'mobx';
 import { observer, inject } from "mobx-react";
 import { stores } from "../common/config";
 import { format, getDay, getDaysInMonth, isSameDay, differenceInDays, isToday } from "date-fns";
-import daLocale from "date-fns/locale/da";
 import { CreateTimeRegistration } from '../components/TimeRegistration/TimeRegistration';
 import TimeRegistrationRow from '../components/TimeRegistration/TimeRegistrationRow';
 import { IconPrevious, IconToday, IconNext, IconEverything } from '../components/shared/Icons';

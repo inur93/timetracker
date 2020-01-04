@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import Login from "./pages/Login";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,8 +9,7 @@ import { HashRouter, Switch, Route, NavLink as Link } from "react-router-dom";
 import { observer, Provider } from "mobx-react";
 import TimeOverview from "./pages/TimeOverview";
 import {
-    Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink,
-    DropdownMenu, DropdownItem, UncontrolledDropdown, DropdownToggle
+    Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink
 } from 'reactstrap';
 import { stores as storeKeys } from "./common/config";
 import { toast as toastify } from 'react-toastify';
@@ -49,11 +48,8 @@ export const toast = {
 export function D(str) {
     return stores.localizationStore.getValue(str);
 }
-class App extends React.Component {
-    uiStore;
-    render() {
-        //on mount
-        useEffect(() => { this.uiStore = new AppUiStore() }, []);
+export default observer(function(props) {
+
         if (stores.authStore.loading) {
             return <div>loading</div>
         }
@@ -68,7 +64,7 @@ class App extends React.Component {
             </Provider>
         }
 
-        const { isOpen, setIsOpen } = this.uiStore;
+        const { isOpen, setIsOpen } = props.uiStore;
        
         return (
             <div>
@@ -104,11 +100,9 @@ class App extends React.Component {
                 </Provider>
             </div>
         );
-    }
-};
-export default observer(App);
+    });
 
-class AppUiStore {
+export class AppUiStore {
     isOpen = false;
 
     setIsOpen = (isOpen) => {

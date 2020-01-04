@@ -1,6 +1,6 @@
 import { decorate, observable, autorun, action, flow, computed } from 'mobx';
 import { toast } from '../App';
-import { enLocale } from 'date-fns/locale/en';
+import enLocale from 'date-fns/locale/en-GB';
 export default class LocalizationStore {
 
     api;

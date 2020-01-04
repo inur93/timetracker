@@ -1,7 +1,7 @@
 import React from 'react';
 import { LoginForm } from "../components/LoginForm";
 import { Container, Row, Col } from 'reactstrap';
-import { inject, observer } from 'mobx-react';
+import { inject } from 'mobx-react';
 import { stores } from '../common/config';
 import Page from './Page';
 import LanguageSelector from '../components/shared/LanguageSelector';
