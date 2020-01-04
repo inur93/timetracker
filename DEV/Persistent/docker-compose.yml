@@ -38,9 +38,13 @@ services:
   ports:
    - 27017:27017
   volumes:
-   - /mnt/f/db/data:/data/db:rw
+   - mongo_data:/data/db
+   #- /mnt/f/db/data:/data/db:rw
 volumes:
  node_modules:
+ mongo_data:
+  name: timetracker-db # this volume is created within the docker managed part of the filesystem and thus cannot be accessed by the file explorer
+  external: true
 #docker-compose up --build
 
 #
