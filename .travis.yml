@@ -2,4 +2,6 @@ language: java
 jdk:
  - oraclejdk11
 script:
+ - yarn --cwd ~/frontend update
+ - yarn --cwd ~/frontend run build
  - mvn package -P "Build react app","Copy react app" 
