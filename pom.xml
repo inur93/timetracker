@@ -90,7 +90,7 @@
                                     <goal>exec</goal>
                                 </goals>
                                 <configuration>
-                                    <workingDirectory>../${webProject}</workingDirectory>
+                                    <workingDirectory>${webProject}</workingDirectory>
                                     <executable>npm</executable>
                                     <arguments>
                                         <argument>run</argument>
@@ -123,7 +123,7 @@
                                     <outputDirectory>target/${project.build.finalName}</outputDirectory>
                                     <resources>
                                         <resource>
-                                            <directory>../${webProject}/build</directory>
+                                            <directory>${webProject}/build</directory>
                                             <filtering>true</filtering>
                                         </resource>
                                     </resources>
