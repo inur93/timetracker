@@ -53,10 +53,7 @@
     </build>
     <profiles>
         <profile>
-            <id>Build and copy react app</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
+            <id>Build react app</id>
             <build>
                 <plugins>
                     <!-- maven-antrun-plugin - builds and copies the React app-->
@@ -81,7 +78,17 @@
                             </execution>
                         </executions>
                     </plugin>
-
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>Copy react app</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <!-- copies react app -->
                     <plugin>
                         <artifactId>maven-resources-plugin</artifactId>
                         <version>2.6</version>
