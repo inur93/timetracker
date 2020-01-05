@@ -20,7 +20,7 @@ public class MorphiaProvider extends MorphiaHandler {
 
     public MorphiaProvider() throws MorphiaException {
         super(new UserSetupHandler(), new DbOptions().mongoClient(new MongoClient(
-                new MongoClientURI(get("timetracker_db", "mongodb://admin:iVVWvDHm6avBgoCa@vormadal-shard-00-00-zqk39.mongodb.net:27017,vormadal-shard-00-01-zqk39.mongodb.net:27017,vormadal-shard-00-02-zqk39.mongodb.net:27017/timetracker?ssl=true&replicaSet=Vormadal-shard-0&authSource=admin&retryWrites=true&w=majority"))
+                new MongoClientURI(get("timetracker_db", "db"))
         ))
         .database("timetracker")
         .modelsPackages("com.vormadal.timetracker.models"));
