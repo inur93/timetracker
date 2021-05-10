@@ -21,7 +21,7 @@
   "devDependencies": {
     "eslint-utils": "^1.4.3",
     "lodash.template": "^4.5.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "mixin-deep": "2.0.1",
     "set-value": "3.0.1"
   },
